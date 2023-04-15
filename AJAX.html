@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            gap: 10px;
+        }
+
+        img {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <select id="selectColor"></select>
+        <select id="selectStorage"></select>
+        <select id="selectWifi"></select>
+    </div>
+    <div class="warp"></div>
+    <script>
+        let url = 'https://raw.githubusercontent.com/B10910066z/iPad-json--/master/iPad.json';
+        let ipadNewJson = {};
+        let ipadJson = [];
+        let ipadColor = [];
+        let ipadStorage = [];
+        let ipadWifi = [];
+
+        window.onload = function () {
+            fetch(url)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (result) {
+                    ipadNewJson = result;
+                    ipadJson = ipadNewJson.ipad;
+                    ipadColor = ipadNewJson.color;
+                    ipadStorage = ipadNewJson.storage;
+                    ipadWifi = ipadNewJson.network;
+                    let container = document.querySelector('.container');
+                    let selectColor = document.querySelector('#selectColor');
+                    let selectStorage = document.querySelector('#selectStorage');
+                    let selectWifi = document.querySelector('#selectWifi');
+                    let warp = document.querySelector('.warp');
+
+                    ipadColor.forEach(element => {
+                        let option = document.createElement('option');
+                        option.text = element;
+                        selectColor.append(option);
+                    });
+                    for (let i = 1; i <= ipadColor.length; i++){
+                        let option = document.querySelector(`#selectColor option:nth-of-type(${i})`);
+                        option.addEventListener('change', function(event){
+                            warp.innerHTML = "";
+                            let img = document.createElement('img');
+                            img.src = `https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/ipad-air-finish-select-gallery-202211-${ipadColor[i]}?wid=2560&hei=1440&fmt=p-jpg&qlt=95&.v=1667585247239`
+                            warp.append(img);
+                        })
+                    }
+                    ipadStorage.forEach(element => {
+                        let option = document.createElement('option');
+                        option.text = element;
+                        selectStorage.append(option);
+                    });
+                    ipadWifi.forEach(element => {
+                        let option = document.createElement('option');
+                        option.text = element;
+                        selectWifi.append(option);
+                    });
+
+
+
+
+                    // ipadJson.forEach(element => {
+                    //     let item = document.createElement('div');
+                    //     item.setAttribute('class', 'item');
+                    //     let path = `https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/ipad-air-finish-select-gallery-202211-${element.color}?wid=2560&hei=1440&fmt=p-jpg&qlt=95&.v=1667585247239`
+                    //     let buy = "";
+                    //     buy += `<img src="${path}">`;
+                    //     buy += `<h2>顏色:${element.color}</h2>`;
+                    //     buy += `<h2>容量:${element.storage}GB</h2>`;
+                    //     buy += `<h2>網路:${element.network}</h2>`;
+                    //     buy += `<h2>價格:${element.price}</h2>`;
+                    //     item.innerHTML = buy;
+                    //     item.style.backgroundColor = "aqua";
+                    //     item.style.padding = "10px";
+                    //     container.append(item);
+                    // });
+                })
+
+
+        }
+
+        // let xhr = new XMLHttpRequest();
+        // let url = 'https://github.com/B10910066z/iPad-json--.git';
+        // window.onload = function () {
+        //     xhr.onload = function () {
+        //         let ipadObject = JSON.parse(xhr.responseText);
+        //         let ipadAJAX = ipadObject.ipad;
+        //         non2.forEach(element => {
+        //             alert("hi");
+        //         });
+        //     }
+        //     xhr.open('GET', url);
+        //     xhr.send();
+        // }
+
+    </script>
+</body>
+
+</html>
